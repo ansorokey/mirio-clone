@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-// Allows clerk
+// Allows clerk to process external urls
 const nextConfig = {
     images: {
         remotePatterns: [
