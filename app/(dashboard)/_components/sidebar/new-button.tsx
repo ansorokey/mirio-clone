@@ -18,8 +18,10 @@ export const NewButton = () => {
                         <Plus className="text-white" />
                     </button>
                 </div>
-
             </DialogTrigger>
+            <DialogContent className="p-0 bg-transparent border-none m-w-[480px]">
+                <CreateOrganization />
+            </DialogContent>
         </Dialog>
     );
 }
