@@ -2,8 +2,7 @@
 
 import qs from "query-string";
 import { Search } from "lucide-react";
-// useDebouce is deprecated, these are the options available instead
-import { useDebounceCallback, useDebounceValue } from "usehooks-ts";
+import { useDebounce } from "usehooks-ts";
 import { useRouter } from "next/navigation";
 import {
     ChangeEvent,
@@ -15,10 +14,8 @@ import { Input } from "@/components/ui/input";
 
 export const SearchInput = () => {
     const router = useRouter();
-    // const [value, setValue] = useState("");
-    // const [debouncedValue] = useDebounceValue("", 500);
-    // BELOW: works but very slow
-    const [debouncedValue, setValue] = useDebounceValue("", 500);
+    const [value, setValue] = useState("");
+    const debouncedValue = useDebounce(value, 500);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
@@ -45,9 +42,7 @@ export const SearchInput = () => {
                 className="w-full max-w-[516px] pl-9"
                 placeholder="Search boards"
                 onChange={handleChange}
-                // value={value}
-                // BELOW: Works but very slow
-                value={debouncedValue}
+                value={value}
             />
         </div>
     );
