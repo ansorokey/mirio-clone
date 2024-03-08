@@ -2,6 +2,7 @@
 
 import { UserButton, OrganizationSwitcher } from "@clerk/nextjs";
 import { SearchInput } from "./search-input";
+import { InviteButton } from "./invite-button";
 
 export const Navbar = () => {
     return (
@@ -34,6 +35,8 @@ export const Navbar = () => {
                     }}
                 />
             </div>
+
+            <InviteButton />
             <UserButton />
         </div>
     );
