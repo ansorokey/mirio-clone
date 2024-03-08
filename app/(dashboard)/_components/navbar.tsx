@@ -1,10 +1,12 @@
 "use client";
 
-import { UserButton, OrganizationSwitcher } from "@clerk/nextjs";
+import { UserButton, OrganizationSwitcher, useOrganization } from "@clerk/nextjs";
 import { SearchInput } from "./search-input";
 import { InviteButton } from "./invite-button";
 
 export const Navbar = () => {
+    const {organization} = useOrganization();
+
     return (
         <div className="flex items-center gap-x-4 p-5">
             <div className="hidden lg:flex lg:flex-1">
@@ -36,7 +38,8 @@ export const Navbar = () => {
                 />
             </div>
 
-            <InviteButton />
+            {/* Should only be bale to see the invite button if we are in an organization to invite someone to */}
+            {organization && <InviteButton />}
             <UserButton />
         </div>
     );
