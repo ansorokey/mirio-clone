@@ -1,5 +1,6 @@
 "use client";
 
+import { EmptyBoards } from "./empty-boards";
 import { EmptyFavorites } from "./empty-favorites";
 import { EmptySearch } from "./empty-search";
 
@@ -31,7 +32,7 @@ export const BoardList = ({
 
     if(!data.length) {
         return (
-            <div>No boards</div>
+            <EmptyBoards />
         );
     }
 
