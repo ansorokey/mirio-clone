@@ -1,7 +1,7 @@
 import { v } from "convex/values";
 import { query } from "./_generated/server";
 
-const get = query({
+export const get = query({
     args: {
         orgId: v.string(),
     },

@@ -3,6 +3,8 @@
 import { EmptyBoards } from "./empty-boards";
 import { EmptyFavorites } from "./empty-favorites";
 import { EmptySearch } from "./empty-search";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 interface BoardListProps {
     orgId: string;
@@ -16,7 +18,17 @@ export const BoardList = ({
     orgId,
     query
 }: BoardListProps) => {
-    const data = [];
+    const data = useQuery(api.boards.get, { orgId});
+
+    // If the data doesnt exist, convex would return null specifically
+    // Undefined means data is loading
+    if(data === undefined) {
+        return (
+            <div>
+                Loading...
+            </div>
+        )
+    }
 
     if(!data.length && query.search) {
         return (
@@ -38,7 +50,7 @@ export const BoardList = ({
 
     return (
         <div>
-            {JSON.stringify(query)}
+            {JSON.stringify(data)}
         </div>
     );
 }
