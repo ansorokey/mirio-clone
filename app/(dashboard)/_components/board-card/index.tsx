@@ -1,5 +1,8 @@
 "use client";
 
+import Link from "next/link";
+import Image from "next/image";
+
 interface BoardCardProps {
     id: string;
     title: string;
@@ -20,9 +23,18 @@ const BoardCard = ({
     isFavorite
 }: BoardCardProps) => {
     return (
-        <div>
-            Board card!
-        </div>
+        <Link href={`/board/${id}`}>
+            <div className="group aspect-[100/127] border rounded-lg flex flex-col justify-between overflow-hidden">
+                <div className="relative flex-1 bg-amber-50">
+                    <Image
+                        src={imageUrl}
+                        alt="Doodle"
+                        fill
+                        className="object-fit"
+                    />
+                </div>
+            </div>
+        </Link>
     );
 }
 
