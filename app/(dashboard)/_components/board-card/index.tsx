@@ -49,7 +49,7 @@ const BoardCard = ({
                 </div>
                 <Footer
                     isFavorite={isFavorite}
-                    titile={title}
+                    title={title}
                     authorLabel={authorLabel}
                     createdAtLabel={createdAtLabel}
                     onClick={() => {}}
