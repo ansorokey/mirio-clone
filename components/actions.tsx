@@ -79,6 +79,9 @@ export const Actions = ({
                     Rename
                 </DropdownMenuItem>
 
+                {/* We use a button down below instead of a dropdown menu item.
+                A button will not close the options menu when clicked on, but this does not matter since the modal and menu wil disappear on deletion.
+                This does mean that the menu wont close after we cancel tho, so that's something we may want to address later on.*/}
                 <ConfirmModal
                     header="Delete board?"
                     description="This will delete theboard and all of its contents."

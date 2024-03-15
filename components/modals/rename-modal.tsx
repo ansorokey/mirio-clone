@@ -12,6 +12,8 @@ import {
 import { useRenameModal } from "@/store/use-rename-modal";
 
 export const RenameModal = () => {
+    // TODO: title useState
+
     const {
         isOpen,
         onClose,
