@@ -12,6 +12,7 @@ import { MoreHorizontal } from "lucide-react";
 import { useApiMutation } from "@/hooks/use-api-mutation";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
+import { useMutation } from "convex/react";
 
 interface BoardCardProps {
     id: string;
