@@ -13,6 +13,7 @@ import { useApiMutation } from "@/hooks/use-api-mutation";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 import { useMutation } from "convex/react";
+import { Id } from "@/convex/_generated/dataModel";
 
 interface BoardCardProps {
     id: string;
@@ -46,6 +47,10 @@ const BoardCard = ({
         mutate: onUnfavorite,
         pending: pendingUnfavorite
     } = useApiMutation(api.board.unfavorite);
+
+    // Alternate method for clarity on typing
+    // const handleFavorite = useMutation(api.board.favorite);
+    // const handleUnfavorite = useMutation(api.board.unfavorite);
 
     const toggleFavorite = () => {
         if(isFavorite) {
