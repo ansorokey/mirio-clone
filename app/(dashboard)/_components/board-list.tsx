@@ -20,7 +20,10 @@ export const BoardList = ({
     orgId,
     query
 }: BoardListProps) => {
-    const data = useQuery(api.boards.get, {orgId, search: query.search });
+    const data = useQuery(api.boards.get, {
+        orgId,
+        ...query
+    });
 
     // If the data doesnt exist, convex would return null specifically
     // Undefined means data is loading
