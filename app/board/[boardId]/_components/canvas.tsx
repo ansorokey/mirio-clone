@@ -2,8 +2,8 @@
 
 export const Canvas = () => {
     return (
-        <div>
+        <main className="h-full w-full relative bg-neutral-100 touch-none">
             canvas
-        </div>
+        </main>
     );
 }
