@@ -2,6 +2,7 @@
 
 import { Info } from "./info";
 import { Participants } from "./participants";
+import { Toolbar } from "./toolbar";
 
 export const Canvas = () => {
     return (
@@ -9,6 +10,7 @@ export const Canvas = () => {
             canvas
             <Info />
             <Participants />
+            <Toolbar />
        </main>
     );
 }
