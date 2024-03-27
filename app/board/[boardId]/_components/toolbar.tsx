@@ -7,6 +7,11 @@ export const Toolbar = () => {
                 <div>Circle</div>
                 <div>ellipses</div>
             </div>
+
+            <div className="bg-white rounded-md p-1.5 flex flex-col items-center shadow-md">
+                <div>Undo</div>
+                <div>Redo</div>
+            </div>
         </div>
     );
 }
