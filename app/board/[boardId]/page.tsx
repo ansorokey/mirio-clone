@@ -2,8 +2,7 @@ import { Canvas } from "./_components/canvas";
 
 const BoardIdPage = () => {
     return (
-        <div>
-            Board Page
+        <div className="h-full">
             <Canvas />
         </div>
     );
