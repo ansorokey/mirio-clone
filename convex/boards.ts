@@ -29,7 +29,7 @@ export const get = query({
             const boards = await getAllOrThrow(ctx.db, ids);
 
             return boards.map(b => ({
-                ...boards,
+                ...b,
                 isFavorite: true
             }))
         }

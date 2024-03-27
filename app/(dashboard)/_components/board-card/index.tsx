@@ -68,6 +68,8 @@ const BoardCard = ({
         addSuffix: true
     })
 
+    // console.log(createdAtLabel);
+
     return (
         <Link href={`/board/${id}`}>
             <div className="group aspect-[100/127] border rounded-lg flex flex-col justify-between overflow-hidden">
