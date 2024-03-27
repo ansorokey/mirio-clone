@@ -4,13 +4,26 @@ import { query } from "./_generated/server";
 export const get = query({
     args: {
         orgId: v.string(),
-        search: v.optional(v.string())
+        search: v.optional(v.string()),
+        favorites: v.optional(v.string())
     },
     handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity();
 
         if(!identity) {
             throw new Error("Unauthorized");
+        }
+
+        if(args.favorites) {
+            const favoritedBoards = await ctx.db.query("userFavorites")
+                .withIndex("by_user_org", (q) =>
+                    q.eq("userId", identity.subject)
+                     .eq("orgId", args.orgId)
+                )
+                .order("desc")
+                .collect();
+
+            const ids = favoritedBoards.map(b => b._id)
         }
 
         const title = args.search as string;
