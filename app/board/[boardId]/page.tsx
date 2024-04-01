@@ -6,14 +6,11 @@ interface BoardIdPageProps {
     params: {
         boardId: string,
     }
-
-}
+};
 
 const BoardIdPage = ({
     params
 }: BoardIdPageProps) => {
-return (<Loading />)
-
     return (
         <div className="h-full">
             {/* Opening a board triggers a new room on liveblocks */}
@@ -22,6 +19,6 @@ return (<Loading />)
             </Room>
         </div>
     );
-}
+};
 
 export default BoardIdPage;
