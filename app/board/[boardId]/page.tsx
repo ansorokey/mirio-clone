@@ -12,6 +12,8 @@ interface BoardIdPageProps {
 const BoardIdPage = ({
     params
 }: BoardIdPageProps) => {
+return (<Loading />)
+
     return (
         <div className="h-full">
             {/* Opening a board triggers a new room on liveblocks */}
