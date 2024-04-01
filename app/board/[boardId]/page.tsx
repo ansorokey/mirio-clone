@@ -13,7 +13,8 @@ const BoardIdPage = ({
 }: BoardIdPageProps) => {
     return (
         <div className="h-full">
-            <Room roomId={params.boardId}>
+            {/* OPening a board triggers a new room on liveblocks */}
+            <Room roomId={params.boardId} fallback={<div>Loading...</div>}>
                 <Canvas boardId={params.boardId} />
             </Room>
         </div>
