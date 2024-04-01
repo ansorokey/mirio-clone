@@ -1,4 +1,5 @@
 import { Canvas } from "./_components/canvas";
+import { Room } from "@/components/room";
 
 interface BoardIdPageProps {
     params: {
@@ -12,7 +13,9 @@ const BoardIdPage = ({
 }: BoardIdPageProps) => {
     return (
         <div className="h-full">
-            <Canvas boardId={params.boardId} />
+            <Room roomId={params.boardId}>
+                <Canvas boardId={params.boardId} />
+            </Room>
         </div>
     );
 }
