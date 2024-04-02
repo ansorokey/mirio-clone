@@ -13,10 +13,10 @@ export async function POST(request: Request) {
     const authorization = await auth();
     const user = await currentUser();
 
-    console.log("AUTH_INFO", {
-        authorization,
-        user
-    })
+    // console.log("AUTH_INFO", {
+    //     authorization,
+    //     user
+    // })
 
     if(!authorization || !user) {
         return new Response("Unauthorized", { status: 403});
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     });
 
     if(board?.orgId !== authorization.orgId) {
-        return new Response("Unauthorized");
+        return new Response("Unauthorized", { status: 403 });
     }
 
     const userInfo = {
@@ -41,7 +41,7 @@ export async function POST(request: Request) {
         picture: user.imageUrl!
     }
 
-    console.log("USER_INFO", { userInfo})
+    // console.log("USER_INFO", { userInfo});
 
     const session = liveblocks.prepareSession(user.id, { userInfo })
 
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
 
     const { status, body } = await session.authorize();
 
-    console.log("ALLOWED", { status, body})
+    // console.log("ALLOWED", { status, body})
 
     return new Response(body, { status })
 }
