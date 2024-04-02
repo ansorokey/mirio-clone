@@ -8,6 +8,7 @@ import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Hint } from "@/components/hint";
 
 
 interface InfoProps {
@@ -32,23 +33,25 @@ export const Info = ({
 
     return (
         <div className="absolute top-2 left-2 bg-white rounded-md px-1.5 h-12 flex items-center shadow-md">
-            <Button asChild className="px-2" variant="board">
-                <Link href="/">
-                    <Image
-                        src="/logo.svg"
-                        alt="Site Logo"
-                        height={40}
-                        width={40}
-                    />
+            <Hint label="Return to dashboard" side="bottom" sideOffset={10}>
+                <Button asChild className="px-2" variant="board">
+                    <Link href="/">
+                        <Image
+                            src="/logo.svg"
+                            alt="Site Logo"
+                            height={40}
+                            width={40}
+                        />
 
-                    <span className={cn(
-                        "font-semibold text-xl ml-2 text-black",
-                        font.className
-                    )}>
-                        Board
-                    </span>
-                </Link>
-            </Button>
+                        <span className={cn(
+                            "font-semibold text-xl ml-2 text-black",
+                            font.className
+                        )}>
+                            Board
+                        </span>
+                    </Link>
+                </Button>
+            </Hint>
         </div>
     );
 };
