@@ -4,6 +4,7 @@ import { currentUser } from "@clerk/nextjs";
 import { UserAvatar } from "./user-avatar";
 import { useOthers, useSelf } from "@/liveblocks.config";
 
+// The number of users to show in addition to current user
 const MAX_SHOWN_USERS = 2;
 
 export const Participants = () => {
