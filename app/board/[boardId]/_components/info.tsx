@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Hint } from "@/components/hint";
 import { useRenameModal } from "@/store/use-rename-modal";
+import { Actions } from "@/components/actions";
+import { Menu } from "lucide-react";
 
 interface InfoProps {
     boardId: string;
@@ -65,13 +67,32 @@ export const Info = ({
 
             <TabSeparator />
 
-            <Button
-                variant="board"
-                className="text-base font-normal px-2"
-                onClick={() => onOpen(data?._id, data?.title)}
+            <Hint label="Edit title" side="bottom" sideOffset={10}>
+                <Button
+                    variant="board"
+                    className="text-base font-normal px-2"
+                    onClick={() => onOpen(data?._id, data?.title)}
+                >
+                    {data.title}
+                </Button>
+            </Hint>
+
+            <TabSeparator />
+
+            <Actions
+                id={data._id}
+                title={data.title}
+                side="bottom"
+                sideOffset={10}
             >
-                {data.title}
-            </Button>
+                <div>
+                    <Hint label="main menu" side="bottom" sideOffset={10}>
+                        <Button size="icon" variant="board">
+                            <Menu />
+                        </Button>
+                    </Hint>
+                </div>
+            </Actions>
         </div>
     );
 };
