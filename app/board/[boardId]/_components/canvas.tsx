@@ -43,10 +43,12 @@ export const Canvas = ({
 
         const current = pointerEventToCanvasPoint(e, camera);
 
-        // console.log(current);
-
         setMyPresence({ cursor: current});
-    }, [])
+    }, []);
+
+    const onPointerLeave = useMutation(({setMyPresence}) => {
+        setMyPresence({ cursor: null})
+    }, []);
 
     return (
         <main className="h-full w-full relative bg-neutral-100 touch-none">
@@ -65,6 +67,7 @@ export const Canvas = ({
                 className="h-[100vh] w-[100vw]"
                 onWheel={onWheel}
                 onPointerMove={onPointerMove}
+                onPointerLeave={onPointerLeave}
             >
                 <g>
                     <CursorsPresence />
