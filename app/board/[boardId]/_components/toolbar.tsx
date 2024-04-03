@@ -1,7 +1,6 @@
 import { Circle, MousePointer2, Pencil, Redo2, Square, StickyNote, Type, Undo2 } from "lucide-react";
 import { ToolButton } from "./tool-button";
-
-type CanvasState = any;
+import { CanvasState } from "@/types/canvas";
 
 interface ToolbarProps {
     canvasState: CanvasState;
