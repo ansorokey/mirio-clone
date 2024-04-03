@@ -27,7 +27,10 @@ export const LayerPreview = memo(({
         case LayerType.Rectangle:
             return (
                 <Rectangle
-
+                    id={id}
+                    layer={layer}
+                    onPointerDown={onLayerPointerDown}
+                    selectionColor={selectionColor}
                 />
             );
         default:
