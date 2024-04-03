@@ -48,7 +48,7 @@ export const Canvas = ({
         const liveLayerIds = storage.get("layerIds");
         const layerId = nanoid();
         const layer = new LiveObject({
-            typr: layerType,
+            type: layerType,
             x: position.x,
             y: position.y,
             height: 100,
@@ -84,6 +84,20 @@ export const Canvas = ({
         setMyPresence({ cursor: null})
     }, []);
 
+    const onPointerUp = useMutation(({}, e) => {
+        const point = pointerEventToCanvasPoint(e, camera);
+
+        if(canvasState.mode === CanvasMode.Inserting) {
+            insertLayer(canvasState.layerType, point);
+        } else {
+            setCanvasState({
+                mode: CanvasMode.None
+            })
+        }
+
+        history.resume();
+    }, [camera, canvasState, history, insertLayer]);
+
     return (
         <main className="h-full w-full relative bg-neutral-100 touch-none">
             <Info boardId={boardId} />
@@ -102,12 +116,21 @@ export const Canvas = ({
                 onWheel={onWheel}
                 onPointerMove={onPointerMove}
                 onPointerLeave={onPointerLeave}
+                onPointerUp={onPointerUp}
             >
                 <g
                     style={{
                         transform: `translate(${camera.x}px, ${camera.y}px)`
                     }}
                 >
+                    {layerIds.map((layerId) => (
+                        <LayerPreview
+                            key={layerId}
+                            id={layerId}
+                            onLayerPointerDown={() => {}}
+                            selectionColor={null}
+                        />
+                    ))}
                     <CursorsPresence />
                 </g>
             </svg>
