@@ -43,7 +43,7 @@ export const Canvas = ({
 
         const current = pointerEventToCanvasPoint(e, camera);
 
-        console.log(current);
+        // console.log(current);
 
         setMyPresence({ cursor: current});
     }, [])
