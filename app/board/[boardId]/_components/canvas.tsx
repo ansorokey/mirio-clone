@@ -15,6 +15,8 @@ interface CanvasProps {
     boardId: string;
 }
 
+const MAX_LAYERS = 100;
+
 export const Canvas = ({
     boardId
 }: CanvasProps) => {
@@ -69,7 +71,11 @@ export const Canvas = ({
                 onPointerMove={onPointerMove}
                 onPointerLeave={onPointerLeave}
             >
-                <g>
+                <g
+                    style={{
+                        transform: `translate(${camera.x}px, ${camera.y}px)`
+                    }}
+                >
                     <CursorsPresence />
                 </g>
             </svg>
