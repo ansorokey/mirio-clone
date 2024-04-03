@@ -53,7 +53,7 @@ export const Toolbar = () => {
                     label="Undo"
                     icon={Undo2}
                     onClick={() => {}}
-                    isDisabled={false}
+                    isDisabled={true}
                 />
 
                 <ToolButton
