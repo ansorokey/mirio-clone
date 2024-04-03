@@ -15,14 +15,14 @@
     The canvas mode is reset to selection.
 */
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { CanvasState, CanvasMode, Camera, Color, LayerType, Point } from "@/types/canvas";
 import { Info } from "./info";
 import { Participants } from "./participants";
 import { Toolbar } from "./toolbar";
-import { useCanRedo, useCanUndo, useHistory, useMutation, useStorage } from "@/liveblocks.config";
+import { useCanRedo, useCanUndo, useHistory, useMutation, useOthersMapped, useStorage } from "@/liveblocks.config";
 import { CursorsPresence } from "./cursors-presence";
-import { pointerEventToCanvasPoint } from "@/lib/utils";
+import { connectionIdToColor, pointerEventToCanvasPoint } from "@/lib/utils";
 import { nanoid } from "nanoid";
 import { LiveObject } from "@liveblocks/client";
 import { LayerPreview } from "./layer-preview";
@@ -112,6 +112,22 @@ export const Canvas = ({
         history.resume();
     }, [camera, canvasState, history, insertLayer]);
 
+    const selections = useOthersMapped((other) => other.presence.selection);
+
+    const layerIdsToColorSelection = useMemo(() => {
+        const layerIdsToColorSelection: Record<string, string> = {};
+
+        for(const user of selections) {
+            const [connectionId, selection] = user;
+
+            for(const layerId of selection) {
+                layerIdsToColorSelection[layerId] = connectionIdToColor(connectionId);
+            }
+        }
+
+        return layerIdsToColorSelection;
+    }, []);
+
     return (
         <main className="h-full w-full relative bg-neutral-100 touch-none">
             <Info boardId={boardId} />
@@ -142,7 +158,7 @@ export const Canvas = ({
                             key={layerId}
                             id={layerId}
                             onLayerPointerDown={() => {}}
-                            selectionColor="#000000" // Lets other people know a user is moving this item
+                            selectionColor={layerIdsToColorSelection[layerId]} // Lets other people know a user is moving this item
                         />
                     ))}
                     <CursorsPresence />
