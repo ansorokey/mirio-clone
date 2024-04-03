@@ -6,6 +6,7 @@ import { Info } from "./info";
 import { Participants } from "./participants";
 import { Toolbar } from "./toolbar";
 import { useCanRedo, useCanUndo, useHistory } from "@/liveblocks.config";
+import { CursorsPresence } from "./cursors-presence";
 // import { useSelf } from "@/liveblocks.config";
 
 

@@ -1,11 +1,30 @@
 "use client";
 
 import { memo } from "react";
+import { useOthersConnectionIds } from "@/liveblocks.config";
+
+const Cursors = () => {
+    const ids = useOthersConnectionIds();
+
+    return (
+        <>
+            {ids.map((connectionId) => {
+                return (
+                    <Cursor
+                        key={connectionId}
+                        connectionId={connectionId}
+                    />
+                );
+            })}
+        </>
+    );
+}
 
 export const CursorsPresence = memo(() => {
     return (
         <>
-            <p>Cursors</p>
+        {/* TODO: Draft Pencil */}
+            <Cursors />
         </>
     );
 });
