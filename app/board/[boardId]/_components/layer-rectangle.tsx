@@ -29,7 +29,7 @@ export const Rectangle = ({
             height={height}
             strokeWidth={1}
             fill="#000000"
-            stroke="transparent"
+            stroke={selectionColor || "transparent" }
         />
     );
 };
