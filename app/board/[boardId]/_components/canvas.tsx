@@ -1,5 +1,20 @@
 "use client";
 
+/*
+    The canvas element has:
+    - An SVG element that takes up the full width and height of the page.
+
+    When the mouse is pressed up (released), we check the current mode of the canvas and perform the matching action.
+    The mode of the canvas is set when an option on the toolbar is selected.
+
+    If inserting:
+    A new layer is generated with all the current information about pointer position, color, default width and height.
+
+
+    The action performed is added to the board history for redo/undo.
+    The canvas mode is reset to selection.
+*/
+
 import React, { useCallback, useState } from "react";
 import { CanvasState, CanvasMode, Camera, Color, LayerType, Point } from "@/types/canvas";
 import { Info } from "./info";
@@ -11,8 +26,6 @@ import { pointerEventToCanvasPoint } from "@/lib/utils";
 import { nanoid } from "nanoid";
 import { LiveObject } from "@liveblocks/client";
 import { LayerPreview } from "./layer-preview";
-// import { useSelf } from "@/liveblocks.config";
-
 
 interface CanvasProps {
     boardId: string;
