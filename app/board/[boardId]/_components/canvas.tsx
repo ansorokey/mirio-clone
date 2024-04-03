@@ -7,6 +7,7 @@ import { Participants } from "./participants";
 import { Toolbar } from "./toolbar";
 import { useCanRedo, useCanUndo, useHistory, useMutation } from "@/liveblocks.config";
 import { CursorsPresence } from "./cursors-presence";
+import { pointerEventToCanvasPoint } from "@/lib/utils";
 // import { useSelf } from "@/liveblocks.config";
 
 
@@ -40,7 +41,9 @@ export const Canvas = ({
     const onPointerMove = useMutation(({ setMyPresence }, e: React.PointerEvent) => {
         e.preventDefault();
 
-        const current = { x: 0, y: 0};
+        const current = pointerEventToCanvasPoint(e, camera);
+
+        console.log(current);
 
         setMyPresence({ cursor: current});
     }, [])
