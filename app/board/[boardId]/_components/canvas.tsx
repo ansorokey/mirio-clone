@@ -10,6 +10,7 @@ import { CursorsPresence } from "./cursors-presence";
 import { pointerEventToCanvasPoint } from "@/lib/utils";
 import { nanoid } from "nanoid";
 import { LiveObject } from "@liveblocks/client";
+import { LayerPreview } from "./layer-preview";
 // import { useSelf } from "@/liveblocks.config";
 
 
@@ -128,7 +129,7 @@ export const Canvas = ({
                             key={layerId}
                             id={layerId}
                             onLayerPointerDown={() => {}}
-                            selectionColor={null}
+                            selectionColor="#000000" // Lets other people know a user is moving this item
                         />
                     ))}
                     <CursorsPresence />
