@@ -186,6 +186,9 @@ export const Canvas = ({
                             selectionColor={layerIdsToColorSelection[layerId]} // Lets other people know a user is moving this item
                         />
                     ))}
+                    <SelectionBox
+                        onResizeHandlePointerDown={() => {}}
+                    />
                     <CursorsPresence />
                 </g>
             </svg>
