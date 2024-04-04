@@ -42,7 +42,7 @@ export const Canvas = ({
     const [canvasState, setCanvasState] = useState<CanvasState>({
         mode: CanvasMode.None,
     });
-    const [lastUsedColor, setLastUsedColor] = useState<Color>({ r:0, g:0, b:0 });
+    const [lastUsedColor, setLastUsedColor] = useState<Color>({ r:255, g:255, b:255 });
 
     const history = useHistory();
     const canUndo = useCanUndo();
@@ -112,6 +112,31 @@ export const Canvas = ({
         history.resume();
     }, [camera, canvasState, history, insertLayer]);
 
+    const onLayerPointerDown = useMutation((
+        { self, setMyPresence },
+        e: React.PointerEvent,
+        layerId: string
+    ) => {
+        if(
+            canvasState.mode === CanvasMode.Pencil ||
+            canvasState.mode === CanvasMode.Inserting
+        ) {
+            return;
+        }
+
+        history.pause();
+        e.stopPropagation();
+
+        const point = pointerEventToCanvasPoint(e, camera);
+
+        if(!self.presence.selection.includes(layerId)) {
+            setMyPresence({ selection: [layerId] }, { addToHistory: true });
+        }
+
+        setCanvasState({ mode: CanvasMode.Translating, current: point });
+
+    }, [setCanvasState, camera, history, canvasState.mode]);
+
     const selections = useOthersMapped((other) => other.presence.selection);
 
     const layerIdsToColorSelection = useMemo(() => {
@@ -157,7 +182,7 @@ export const Canvas = ({
                         <LayerPreview
                             key={layerId}
                             id={layerId}
-                            onLayerPointerDown={() => {}}
+                            onLayerPointerDown={onLayerPointerDown}
                             selectionColor={layerIdsToColorSelection[layerId]} // Lets other people know a user is moving this item
                         />
                     ))}
