@@ -22,7 +22,7 @@ import { Participants } from "./participants";
 import { Toolbar } from "./toolbar";
 import { useCanRedo, useCanUndo, useHistory, useMutation, useOthersMapped, useStorage } from "@/liveblocks.config";
 import { CursorsPresence } from "./cursors-presence";
-import { connectionIdToColor, pointerEventToCanvasPoint } from "@/lib/utils";
+import { connectionIdToColor, pointerEventToCanvasPoint, resizeBounds } from "@/lib/utils";
 import { nanoid } from "nanoid";
 import { LiveObject } from "@liveblocks/client";
 import { LayerPreview } from "./layer-preview";
@@ -84,8 +84,19 @@ export const Canvas = ({
     ) => {
         if(canvasState.mode !== CanvasMode.Resizing) return;
 
+        const bounds = resizeBounds(
+            canvasState.initialBounds,
+            canvasState.corner,
+            point
+        );
 
-    }, [])
+        const liveLayers = storage.get("layers");
+        const layer = liveLayers.get(self.presence.selection[0]);
+
+        if(layer) {
+            layer.update(bounds);
+        }
+    }, [canvasState])
 
     const onResizeHandlePointerDown = useCallback((
         corner: Side,
@@ -114,11 +125,11 @@ export const Canvas = ({
         const current = pointerEventToCanvasPoint(e, camera);
 
         if(canvasState.mode === CanvasMode.Resizing) {
-            console.log('resizing');
+            resizeSelectedLayer(current);
         }
 
         setMyPresence({ cursor: current});
-    }, [canvasState]);
+    }, [canvasState, resizeSelectedLayer, camera]);
 
     const onPointerLeave = useMutation(({setMyPresence}) => {
         setMyPresence({ cursor: null})
