@@ -16,7 +16,7 @@
 */
 
 import React, { useCallback, useMemo, useState } from "react";
-import { CanvasState, CanvasMode, Camera, Color, LayerType, Point } from "@/types/canvas";
+import { CanvasState, CanvasMode, Camera, Color, LayerType, Point, Side, XYWH } from "@/types/canvas";
 import { Info } from "./info";
 import { Participants } from "./participants";
 import { Toolbar } from "./toolbar";
@@ -77,6 +77,18 @@ export const Canvas = ({
         setMyPresence({ selection: [layerId]}, {addToHistory: true});
         setCanvasState({ mode: CanvasMode.None });
     }, [lastUsedColor]);
+
+    const onResizeHandlePointerDown = useCallback((
+        corner: Side,
+        initialBounds: XYWH,
+    ) => {
+        history.pause();
+        setCanvasState({
+            mode: CanvasMode.Resizing,
+            initialBounds,
+            corner
+        });
+    }, [history]);
 
     const onWheel = useCallback((e: React.WheelEvent) => {
         setCamera((camera) => {
@@ -188,7 +200,7 @@ export const Canvas = ({
                         />
                     ))}
                     <SelectionBox
-                        onResizeHandlePointerDown={() => {}}
+                        onResizeHandlePointerDown={onResizeHandlePointerDown}
                     />
                     <CursorsPresence />
                 </g>
