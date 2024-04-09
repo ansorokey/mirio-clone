@@ -165,6 +165,16 @@ export const Canvas = ({
         setMyPresence({ cursor: null})
     }, []);
 
+    const onPointerDown = useCallback((e: React.PointerEvent) => {
+        const point = pointerEventToCanvasPoint(e, camera);
+
+        if(canvasState.mode == CanvasMode.Inserting) return;
+
+        // TODO: set condition for drawing
+
+        setCanvasState({ origin: point, mode: CanvasMode.Pressing});
+    }, [camera, canvasState.mode, setCanvasState]);
+
     const onPointerUp = useMutation(({}, e) => {
         const point = pointerEventToCanvasPoint(e, camera);
 
@@ -239,6 +249,7 @@ export const Canvas = ({
                 onPointerMove={onPointerMove}
                 onPointerLeave={onPointerLeave}
                 onPointerUp={onPointerUp}
+                onPointerDown={onPointerDown}
             >
                 <g
                     style={{
