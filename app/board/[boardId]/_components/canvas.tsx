@@ -106,6 +106,14 @@ export const Canvas = ({
 
     }, [canvasState]);
 
+    const unselectLayers = useMutation((
+        {self, setMyPresence}
+    ) => {
+        if(self.presence.selection.length > 0) {
+            setMyPresence({selection: []}, { addToHistory: true});
+        }
+    }, []);
+
     const resizeSelectedLayer = useMutation((
         { storage, self},
         point: Point,
@@ -178,7 +186,13 @@ export const Canvas = ({
     const onPointerUp = useMutation(({}, e) => {
         const point = pointerEventToCanvasPoint(e, camera);
 
-        if(canvasState.mode === CanvasMode.Inserting) {
+        if(
+            canvasState.mode === CanvasMode.None ||
+            canvasState.mode === CanvasMode.Pressing
+        ) {
+            unselectLayers();
+            setCanvasState({mode: CanvasMode.None})
+        } else if(canvasState.mode === CanvasMode.Inserting) {
             insertLayer(canvasState.layerType, point);
         } else {
             setCanvasState({
@@ -187,7 +201,7 @@ export const Canvas = ({
         }
 
         history.resume();
-    }, [camera, canvasState, history, insertLayer]);
+    }, [camera, canvasState, history, insertLayer, unselectLayers]);
 
     const onLayerPointerDown = useMutation((
         { self, setMyPresence },
