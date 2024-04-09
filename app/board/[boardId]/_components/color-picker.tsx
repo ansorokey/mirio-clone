@@ -15,3 +15,19 @@ export const ColorPicker = ({
         </div>
     );
 }
+
+interface ColorButtonProps {
+    onClick: (color: Color) => void;
+    color: Color;
+}
+
+const ColorButton = ({
+    onClick,
+    color
+}: ColorButtonProps) => {
+    return (
+        <div>
+            Color buton
+        </div>
+    );
+}
