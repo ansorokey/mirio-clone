@@ -92,7 +92,7 @@ export const Canvas = ({
         const liveLayers = storage.get("layers");
 
         for(const id of self.presence.selection) {
-            const layer = liveLayers.get("id");
+            const layer = liveLayers.get(id);
 
             if(layer) {
                 layer.update({
@@ -153,13 +153,13 @@ export const Canvas = ({
         const current = pointerEventToCanvasPoint(e, camera);
 
         if(canvasState.mode === CanvasMode.Translating) {
-            console.log('translating');
+            translateSelectedLayers(current);
         } else if(canvasState.mode === CanvasMode.Resizing) {
             resizeSelectedLayer(current);
         }
 
         setMyPresence({ cursor: current});
-    }, [canvasState, resizeSelectedLayer, camera]);
+    }, [canvasState, resizeSelectedLayer, camera, translateSelectedLayers]);
 
     const onPointerLeave = useMutation(({setMyPresence}) => {
         setMyPresence({ cursor: null})
