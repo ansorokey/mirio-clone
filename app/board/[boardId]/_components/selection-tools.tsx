@@ -20,6 +20,25 @@ export const SelectionTools = memo(({
 }: SelectionToolsProps) => {
     const selection = useSelf((me) => me.presence.selection);
 
+    const moveToBack = useMutation((
+        {storage}
+    ) => {
+        const liveLayerIds = storage.get("layerIds");
+        const indicies: number[] = [];
+
+        const arr = liveLayerIds.toArray();
+
+        for(let i = 0; i < arr.length; i++) {
+            if(selection.includes(arr[i])){
+                indicies.push(i);
+            }
+        }
+
+        for(let i = 0; i < indicies.length; i++) {
+            liveLayerIds.move(indicies[i], i);
+        }
+    }, [selection]);
+
     const setFill = useMutation((
         {storage},
         fill: Color,
@@ -67,6 +86,7 @@ export const SelectionTools = memo(({
                     <Button
                         variant="board"
                         size="icon"
+                        onClick={moveToBack}
                     >
                         <SendToBack />
                     </Button>
