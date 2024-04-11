@@ -115,6 +115,33 @@ export const Canvas = ({
         }
     }, []);
 
+    const updateSelectionNet = useMutation((
+        { storage, setMyPresence},
+        current: Point,
+        origin: Point
+    ) => {
+        const layers = storage.get("layers").toImmutable();
+
+        setCanvasState({
+            mode: CanvasMode.SelectionNet,
+            origin,
+            current
+        });
+
+        // create intersecting util
+    }, []);
+
+    const startMultiSelection = useCallback((
+        current: Point,
+        origin: Point
+    ) => {
+        if(Math.abs(current.x - origin.x) + Math.abs(current.y - origin.y) > 5) {
+            // 5 is just an arbitrary magic number
+            // could use any value to decide we've been moving the cursor while pressed down
+            setCanvasState({ mode: CanvasMode.SelectionNet, origin, current})
+        }
+    }, []);
+
     const resizeSelectedLayer = useMutation((
         { storage, self},
         point: Point,
@@ -161,7 +188,11 @@ export const Canvas = ({
 
         const current = pointerEventToCanvasPoint(e, camera);
 
-        if(canvasState.mode === CanvasMode.Translating) {
+        if(canvasState.mode === CanvasMode.Pressing) {
+            startMultiSelection(current, canvasState.origin);
+        } else if(canvasState.mode === CanvasMode.SelectionNet) {
+            updateSelectionNet(current, canvasState.origin);
+        } else if(canvasState.mode === CanvasMode.Translating) {
             translateSelectedLayers(current);
         } else if(canvasState.mode === CanvasMode.Resizing) {
             resizeSelectedLayer(current);
