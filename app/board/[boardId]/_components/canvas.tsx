@@ -257,6 +257,10 @@ export const Canvas = ({
         history.pause();
         e.stopPropagation();
 
+        console.log(
+            console.log("down")
+        )
+
         const point = pointerEventToCanvasPoint(e, camera);
 
         if(!self.presence.selection.includes(layerId)) {
@@ -325,6 +329,15 @@ export const Canvas = ({
                     <SelectionBox
                         onResizeHandlePointerDown={onResizeHandlePointerDown}
                     />
+                    {canvasState.mode === CanvasMode.SelectionNet && canvasState.current != null && (
+                        <rect
+                            className="fill-blue-500/5 stroke-blue-500 stroke-1"
+                            x={Math.min(canvasState.origin.x, canvasState.current.x)}
+                            y={Math.min(canvasState.origin.y, canvasState.current.y)}
+                            width={Math.abs(Math.abs(canvasState.origin.x - canvasState.origin.y))}
+                            height={Math.abs(canvasState.origin.y - canvasState.origin.y)}
+                        />
+                    )}
                     <CursorsPresence />
                 </g>
             </svg>

@@ -131,7 +131,7 @@ export function findIntersectingLayersWithRectangle(
     ) {
       ids.push(layerId);
     }
-
-    return ids;
   }
+
+  return ids;
 }
