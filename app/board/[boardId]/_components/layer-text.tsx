@@ -39,6 +39,19 @@ export const Text = ({
         fill, value
     } = layer;
 
+    const updateValue = useMutation((
+        { storage },
+        newValue: string
+    ) => {
+        const liveLayers = storage.get("layers");
+
+        liveLayers.get(id)?.set("value", newValue);
+    }, []);
+
+    const handleContentChange = (e: ContentEditableEvent) => {
+        updateValue(e.target.value);
+    }
+
     return (
         <foreignObject
             x={x}
@@ -51,8 +64,8 @@ export const Text = ({
             }}
         >
             <ContentEditable
-                html={"Text"}
-                onChange={() => {}}
+                html={value || "Text"}
+                onChange={handleContentChange}
                 className={cn(
                     "h-full w-full flex items-center justify-center text-center drop-shadow-md outline-none",
                     font.className
