@@ -5,6 +5,7 @@ import { LayerType } from "@/types/canvas";
 import React from "react";
 import { memo } from "react";
 import { Rectangle } from "./layer-rectangle";
+import { Ellipse } from "./layer-ellipse";
 
 interface LayerPreviewProps {
     id: string;
