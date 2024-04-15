@@ -1,6 +1,6 @@
 import { Kalam } from "next/font/google";
 import CntentEditable, { ContentEditableEvent } from "react-contenteditable";
-import { cn, colorToCss} from "@/lib/utils";
+import { cn, colorToCss, getContrastingTextColor} from "@/lib/utils";
 import { NoteLayer } from "@/types/canvas";
 import { useMutation } from "@/liveblocks.config";
 import React from "react";
@@ -8,7 +8,7 @@ import ContentEditable from "react-contenteditable";
 
 const calculateFontSize = (width: number, height: number) => {
     const maxFontSize = 96;
-    const scaleFactor = 0.5;
+    const scaleFactor = 0.15;
     const fontSizeBasedOnHeight = height * scaleFactor;
     const fontSizeBasedOnWidth = width * scaleFactor;
 
@@ -73,8 +73,7 @@ export const Note = ({
                     font.className
                 )}
                 style={{
-                    color: fill ? colorToCss(fill) : "#000",
-                    // create contrast color util
+                    color: fill ? getContrastingTextColor(fill) : "#000",
                     fontSize: calculateFontSize(width, height)
 
                 }}
