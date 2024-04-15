@@ -16,18 +16,33 @@ export const ColorPicker = ({
             pr-2 mr-2 border-neutral-200"
         >
 
+            {/* red */}
             <ColorButton
                 color={{r: 255, g: 15, b: 15}}
                 onClick={onChange}
             />
 
+            {/* green */}
             <ColorButton
                 color={{r: 15, g: 255, b: 15}}
                 onClick={onChange}
             />
 
+            {/* green */}
             <ColorButton
                 color={{r: 15, g: 15, b: 255}}
+                onClick={onChange}
+            />
+
+            {/* black */}
+            <ColorButton
+                color={{r: 0, g: 0, b: 0}}
+                onClick={onChange}
+            />
+
+            {/* white */}
+            <ColorButton
+                color={{r: 255, g: 255, b: 255}}
                 onClick={onChange}
             />
         </div>

@@ -39,6 +39,9 @@ export const Note = ({
         fill, value
     } = layer;
 
+    console.log(fill);
+    console.log(getContrastingTextColor(fill));
+
     const updateValue = useMutation((
         { storage },
         newValue: string
