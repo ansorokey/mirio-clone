@@ -33,6 +33,15 @@ export const LayerPreview = memo(({
                     selectionColor={selectionColor}
                 />
             );
+        case LayerType.Ellipse:
+            return (
+                <Ellipse
+                    id={id}
+                    layer={layer}
+                    onPointerDown={onPointerDown}
+                    selectionColor={selectionColor}
+                />
+            );
         default:
             // console.log(layer)
             // console.warn("Unknown layer type");
