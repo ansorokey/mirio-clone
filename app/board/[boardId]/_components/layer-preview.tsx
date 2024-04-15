@@ -38,7 +38,7 @@ export const LayerPreview = memo(({
                 <Ellipse
                     id={id}
                     layer={layer}
-                    onPointerDown={onPointerDown}
+                    onPointerDown={onLayerPointerDown}
                     selectionColor={selectionColor}
                 />
             );
