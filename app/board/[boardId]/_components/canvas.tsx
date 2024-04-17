@@ -303,7 +303,7 @@ export const Canvas = ({
             unselectLayers();
             setCanvasState({mode: CanvasMode.None})
         } else if(canvasState.mode === CanvasMode.Pencil) {
-            intertPath();
+            insertPath();
         } else if(canvasState.mode === CanvasMode.Inserting) {
             insertLayer(canvasState.layerType, point);
         } else {

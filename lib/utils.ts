@@ -175,6 +175,9 @@ export function penPointsToPathLayer(
   }
 }
 
+
+// Lol we have no idea what this does or how
+// Allwe know is it turns a matrix of points into a stroke
 export function getSvgPathFromStroke(stroke: number[][]) {
   if (!stroke.length) return "";
 
