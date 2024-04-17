@@ -142,6 +142,24 @@ export const Canvas = ({
         });
     }, [canvasState.mode]);
 
+    const insertPath = useMutation((
+        { storage, self, setMyPresence }
+    ) => {
+        const liveLayers = storage.get("layers");
+        const { pencilDraft } = self.presence;
+
+        if(
+            pencilDraft == null ||
+            pencilDraft.length < 2 ||
+            liveLayers.size >+ MAX_LAYERS
+        ) {
+            setMyPresence({ pencilDraft: null});
+            return;
+        }
+
+        const id = nanoid();
+    }, []);
+
     const unselectLayers = useMutation((
         {self, setMyPresence}
     ) => {
@@ -271,6 +289,8 @@ export const Canvas = ({
         ) {
             unselectLayers();
             setCanvasState({mode: CanvasMode.None})
+        } else if(canvasState.mode === CanvasMode.Pencil) {
+            intertPath();
         } else if(canvasState.mode === CanvasMode.Inserting) {
             insertLayer(canvasState.layerType, point);
         } else {
@@ -280,7 +300,7 @@ export const Canvas = ({
         }
 
         history.resume();
-    }, [camera, canvasState, history, insertLayer, unselectLayers]);
+    }, [camera, canvasState, history, insertLayer, unselectLayers, insertPath, setCanvasState]);
 
     const onLayerPointerDown = useMutation((
         { self, setMyPresence },
