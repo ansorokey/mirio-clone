@@ -63,6 +63,15 @@ export const LayerPreview = memo(({
                     selectionColor={selectionColor}
                 />
             );
+        case LayerType.Path:
+            return (
+                <Path
+                    key={id}
+                    points={layer.points}
+                    onPointerDown={onLayerPointerDown}
+                    selectionColor={selectionColor}
+                />
+            );
         default:
             // console.log(layer)
             // console.warn("Unknown layer type");
