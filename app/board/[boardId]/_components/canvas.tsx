@@ -22,7 +22,7 @@ import { Participants } from "./participants";
 import { Toolbar } from "./toolbar";
 import { useCanRedo, useCanUndo, useHistory, useMutation, useOthersMapped, useStorage } from "@/liveblocks.config";
 import { CursorsPresence } from "./cursors-presence";
-import { connectionIdToColor, findIntersectingLayersWithRectangle, pointerEventToCanvasPoint, resizeBounds } from "@/lib/utils";
+import { connectionIdToColor, findIntersectingLayersWithRectangle, penPointsToPathLayer, pointerEventToCanvasPoint, resizeBounds } from "@/lib/utils";
 import { nanoid } from "nanoid";
 import { LiveObject } from "@liveblocks/client";
 import { LayerPreview } from "./layer-preview";
@@ -158,7 +158,20 @@ export const Canvas = ({
         }
 
         const id = nanoid();
-    }, []);
+        liveLayers.set(
+            id,
+            new LiveObject(penPointsToPathLayer(
+                pencilDraft,
+                lastUsedColor
+            ))
+        );
+
+        const liveLayerIds = storage.get("layerIds");
+        liveLayerIds.push(id);
+
+        setMyPresence({ pencilDraft: null });
+        setCanvasState({ mode: CanvasMode.Pencil });
+    }, [lastUsedColor]);
 
     const unselectLayers = useMutation((
         {self, setMyPresence}
