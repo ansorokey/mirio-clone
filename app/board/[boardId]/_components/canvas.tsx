@@ -20,14 +20,15 @@ import { CanvasState, CanvasMode, Camera, Color, LayerType, Point, Side, XYWH } 
 import { Info } from "./info";
 import { Participants } from "./participants";
 import { Toolbar } from "./toolbar";
-import { useCanRedo, useCanUndo, useHistory, useMutation, useOthersMapped, useStorage } from "@/liveblocks.config";
+import { useCanRedo, useCanUndo, useHistory, useMutation, useOthersMapped, useSelf, useStorage } from "@/liveblocks.config";
 import { CursorsPresence } from "./cursors-presence";
-import { connectionIdToColor, findIntersectingLayersWithRectangle, penPointsToPathLayer, pointerEventToCanvasPoint, resizeBounds } from "@/lib/utils";
+import { colorToCss, connectionIdToColor, findIntersectingLayersWithRectangle, penPointsToPathLayer, pointerEventToCanvasPoint, resizeBounds } from "@/lib/utils";
 import { nanoid } from "nanoid";
 import { LiveObject } from "@liveblocks/client";
 import { LayerPreview } from "./layer-preview";
 import { SelectionBox } from "./selection-box";
 import { SelectionTools } from "./selection-tools";
+import { Path } from "./layer-path";
 
 interface CanvasProps {
     boardId: string;
@@ -39,6 +40,7 @@ export const Canvas = ({
     boardId
 }: CanvasProps) => {
     const layerIds = useStorage((root) => root.layerIds);
+    const pencilDraft = useSelf(me => me.presence.pencilDraft);
 
     const [camera, setCamera] = useState<Camera>({x:0, y:0});
     const [canvasState, setCanvasState] = useState<CanvasState>({
@@ -412,6 +414,15 @@ export const Canvas = ({
                         />
                     )}
                     <CursorsPresence />
+                    {pencilDraft != null && pencilDraft.length > 0 && (
+                        <Path
+                            points={pencilDraft}
+                            fill={colorToCss(lastUsedColor)}
+                            x={0}
+                            y={0}
+
+                        />
+                    )}
                 </g>
             </svg>
        </main>
