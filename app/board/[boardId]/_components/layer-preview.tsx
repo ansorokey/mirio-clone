@@ -78,8 +78,7 @@ export const LayerPreview = memo(({
                 />
             );
         default:
-            // console.log(layer)
-            // console.warn("Unknown layer type");
+            console.warn("Unknown layer type");
     }
 });
 
