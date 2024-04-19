@@ -30,6 +30,7 @@ import { SelectionBox } from "./selection-box";
 import { SelectionTools } from "./selection-tools";
 import { Path } from "./layer-path";
 import { useDisableScrollBounce } from "@/hooks/use-disable-scroll-bounce";
+import { useDeleteLayers } from "@/hooks/use-delete-layers";
 
 interface CanvasProps {
     boardId: string;
@@ -48,7 +49,6 @@ export const Canvas = ({
         mode: CanvasMode.None,
     });
     const [lastUsedColor, setLastUsedColor] = useState<Color>({ r:255, g:255, b:255 });
-
 
     useDisableScrollBounce();
     const history = useHistory();
@@ -335,10 +335,6 @@ export const Canvas = ({
         history.pause();
         e.stopPropagation();
 
-        console.log(
-            console.log("down")
-        )
-
         const point = pointerEventToCanvasPoint(e, camera);
 
         if(!self.presence.selection.includes(layerId)) {
@@ -364,6 +360,33 @@ export const Canvas = ({
 
         return layerIdsToColorSelection;
     }, [selections]);
+
+    const deleteLayers = useDeleteLayers();
+
+    useEffect(() => {
+        function onKeyDown(e: KeyboardEvent) {
+            switch (e.key) {
+                case "z":
+                    if ( e.ctrlKey || e.metaKey) {
+                        history.undo();
+                    }
+                    break;
+                case "y":
+                    if ( e.ctrlKey || e.metaKey) {
+                        history.redo();
+                    }
+                    break;
+            }
+        }
+
+        // Add event listener on mount
+        document.addEventListener("keydown", onKeyDown);
+
+        // remove event listener on dismount
+        return () => {
+            document.removeEventListener("keydown", onKeyDown);
+        }
+    }, [deleteLayers, history]);
 
     return (
         <main className="h-full w-full relative bg-neutral-100 touch-none">
