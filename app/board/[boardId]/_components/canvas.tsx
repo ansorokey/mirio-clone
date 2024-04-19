@@ -376,6 +376,10 @@ export const Canvas = ({
                         history.redo();
                     }
                     break;
+                // FInd a workaround to prevent deletion during typing
+                // case "Backspace":
+                //     deleteLayers();
+                //     break;
             }
         }
 
