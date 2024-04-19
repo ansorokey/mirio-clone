@@ -15,7 +15,7 @@
     The canvas mode is reset to selection.
 */
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { CanvasState, CanvasMode, Camera, Color, LayerType, Point, Side, XYWH } from "@/types/canvas";
 import { Info } from "./info";
 import { Participants } from "./participants";
@@ -29,6 +29,7 @@ import { LayerPreview } from "./layer-preview";
 import { SelectionBox } from "./selection-box";
 import { SelectionTools } from "./selection-tools";
 import { Path } from "./layer-path";
+import { useDisableScrollBounce } from "@/hooks/use-disable-scroll-bounce";
 
 interface CanvasProps {
     boardId: string;
@@ -48,6 +49,8 @@ export const Canvas = ({
     });
     const [lastUsedColor, setLastUsedColor] = useState<Color>({ r:255, g:255, b:255 });
 
+
+    useDisableScrollBounce();
     const history = useHistory();
     const canUndo = useCanUndo();
     const canRedo = useCanRedo();
